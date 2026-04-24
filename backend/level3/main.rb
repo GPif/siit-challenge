@@ -26,5 +26,5 @@ res = {
   end
 }
 
-puts JSON.pretty_generate(res)
-File.write('./data/output.json', JSON.pretty_generate(res))
+puts OutputFormater.call(res)
+File.write('./data/output.json', OutputFormater.call(res))
