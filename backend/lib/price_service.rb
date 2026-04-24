@@ -12,4 +12,28 @@ class PriceService
     distance_component = @car.price_per_km * @rental.distance
     time_component + distance_component
   end
+
+  # New rules:
+  # - price per day decreases by 10% after 1 day
+  # - price per day decreases by 30% after 4 days
+  # - price per day decreases by 50% after 10 days
+  def compute_with_discount
+    distance_component = @car.price_per_km * @rental.distance
+
+    tiers = [1, 4, 10, Float::INFINITY]
+    discount_rates = [0.0, 0.1, 0.3, 0.5]
+    curr_floor = 0
+    time_component = 0
+    tiers.each_with_index do |tier_limit, index|
+      tier = [@rental.duration - curr_floor, tier_limit - curr_floor].min # compute duration for current tier
+      discount_rate = (1 - discount_rates[index])
+      time_component += tier * discount_rate * @car.price_per_day
+
+      break if tier_limit >= @rental.duration
+
+      curr_floor = tier_limit
+    end
+
+    time_component + distance_component
+  end
 end

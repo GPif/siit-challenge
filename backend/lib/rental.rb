@@ -34,6 +34,8 @@ class Rental
   end
 
   def duration
-    (@end_date - @start_date).to_i + 1 #last day seems included
+    return @duration if @duration # As we cannot modify date
+
+    @duration = (@end_date - @start_date).to_i + 1 #last day seems included
   end
 end

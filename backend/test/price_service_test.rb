@@ -10,4 +10,11 @@ class PriceServiceTest < Test::Unit::TestCase
     price_service = PriceService.new(car, rental)
     assert_equal 150, price_service.compute
   end
+
+  def test_compute_with_discount
+    car = Car.new(id: 1, price_per_day: 2000, price_per_km: 10)
+    rental = Rental.new(id: 2, car_id: 1, start_date: Date.new(2015, 7, 3), end_date: Date.new(2015, 7, 14), distance: 1000)
+    price_service = PriceService.new(car, rental)
+    assert_equal 27_800, price_service.compute_with_discount
+  end
 end
