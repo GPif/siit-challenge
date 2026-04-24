@@ -1,4 +1,8 @@
+require_relative 'numeric_helper'
+
 class PriceService
+  include NumericHelper
+
   def initialize(car, rental)
     @car = car
     @rental = rental
@@ -34,6 +38,6 @@ class PriceService
       curr_floor = tier_limit
     end
 
-    time_component + distance_component
+    numeric_format(time_component + distance_component)
   end
 end
