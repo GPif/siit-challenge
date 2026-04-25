@@ -1,1 +1,1 @@
-Car = Struct.new('Car', :id, :price_per_day, :price_per_km)
+Car = Struct.new('Car', :id, :price_per_day, :price_per_km, keyword_init: true)

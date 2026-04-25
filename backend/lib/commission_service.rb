@@ -1,10 +1,8 @@
-require_relative 'numeric_helper'
-
 class CommissionService
-  include NumericHelper
+  RATE = 30
 
   def initialize(price, duration)
-    @price = price
+    @price    = price
     @duration = duration
   end
 
@@ -14,14 +12,10 @@ class CommissionService
   # - 1€/day goes to the roadside assistance
   # - the rest goes to us
   def compute
-    commission = @price * 0.3
-    insurance_fee = commission / 2
+    commission     = @price * RATE / 100
+    insurance_fee  = commission / 2
     assistance_fee = @duration * 100
-    drivy_fee = commission - insurance_fee - assistance_fee
-    {
-      insurance_fee: numeric_format(insurance_fee),
-      assistance_fee: numeric_format(assistance_fee),
-      drivy_fee: numeric_format(drivy_fee)
-    }
+    drivy_fee      = commission - insurance_fee - assistance_fee
+    Commission.new(insurance_fee:, assistance_fee:, drivy_fee:)
   end
 end
